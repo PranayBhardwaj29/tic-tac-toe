@@ -85,19 +85,23 @@ const GameController = (function () {
         Gameboard.resetBoard();
         gameOver = false;
         activePlayer = player1;
-    }
+    };
 
     return { getActivePlayer, switchPlayer, playRound, checkWinner, resetGame };
 })();
 
-GameController.playRound(0);
-GameController.playRound(1);
-GameController.playRound(2);
-GameController.playRound(4);
-GameController.playRound(3);
-GameController.playRound(5);
-GameController.playRound(7);
-GameController.playRound(6);
-GameController.playRound(8);
+const displayController = (function () {
+    const render = () => {
+        const boardDiv = document.querySelector('#board');
+        boardDiv.innerHTML = "";
+        Gameboard.getBoard().forEach((cell) => {
+            const btn = document.createElement("button");
+            btn.textContent = cell;
+            boardDiv.appendChild(btn);
+        })
+    };
 
-console.log(...Gameboard.getBoard());
+    return { render };
+})();
+
+displayController.render();
