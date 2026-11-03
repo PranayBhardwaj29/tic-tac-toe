@@ -94,8 +94,12 @@ const displayController = (function () {
     const render = () => {
         const boardDiv = document.querySelector('#board');
         boardDiv.innerHTML = "";
-        Gameboard.getBoard().forEach((cell) => {
+        Gameboard.getBoard().forEach((cell, index) => {
             const btn = document.createElement("button");
+            btn.dataset.index = index;
+            btn.addEventListener("click", () => {
+                // call playRound(index), then render()
+            });
             btn.textContent = cell;
             boardDiv.appendChild(btn);
         })
