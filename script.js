@@ -67,6 +67,7 @@ const GameController = (function () {
         Gameboard.placeMarker(index, getActivePlayer().marker);
 
         if (checkWinner()) {
+            getActivePlayer().addScore();
             gameOver = true;
             return getActivePlayer().name + " wins";
         }
@@ -85,24 +86,41 @@ const GameController = (function () {
         activePlayer = player1;
     };
 
-    return { getActivePlayer, switchPlayer, playRound, checkWinner, resetGame };
+    const setPlayers = (name1, name2) => {
+        player1.name = name1 || "Player 1";
+        player2.name = name2 || "Player 2";
+    };
+
+    const isGameOver = () => gameOver;
+    const getPlayers = () => [player1, player2];
+
+    return { getActivePlayer, switchPlayer, playRound, checkWinner, resetGame, setPlayers, isGameOver, getPlayers };
 })();
 
 const displayController = (function () {
     const render = () => {
         const boardDiv = document.querySelector('#board');
         boardDiv.innerHTML = "";
+
         Gameboard.getBoard().forEach((cell, index) => {
             const btn = document.createElement("button");
             btn.dataset.index = index;
+            btn.textContent = cell;
+            btn.disabled = GameController.isGameOver() || cell !== "";
             btn.addEventListener("click", () => {
                 const message = GameController.playRound(index);
                 render();
-                document.querySelector("#result").textContent = message;
+                document.querySelector("#result").textContent = message || "";
             });
-            btn.textContent = cell;
             boardDiv.appendChild(btn);
-        })
+        });
+
+        const [p1, p2] = GameController.getPlayers();
+        document.querySelector("#turn").textContent = GameController.isGameOver()
+            ? ""
+            : GameController.getActivePlayer().name + "'s turn";
+        document.querySelector("#scores").textContent =
+            p1.name + ": " + p1.getScore() + " | " + p2.name + ": " + p2.getScore();
     };
 
     return { render };
@@ -111,6 +129,16 @@ const displayController = (function () {
 displayController.render();
 
 document.querySelector("#restart").addEventListener("click", () => {
+    GameController.resetGame();
+    displayController.render();
+    document.querySelector("#result").textContent = "";
+});
+
+document.querySelector("#start").addEventListener("click", () => {
+    GameController.setPlayers(
+        document.querySelector("#name1").value,
+        document.querySelector("#name2").value
+    );
     GameController.resetGame();
     displayController.render();
     document.querySelector("#result").textContent = "";
