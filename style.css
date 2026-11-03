@@ -1,9 +1,10 @@
 :root {
-    --navy: #0B2545;   /* text */
-    --blue: #1D4ED8;   /* buttons, X, winning cells */
-    --sky: #60A5FA;    /* O marker */
-    --ice: #EAF2FF;    /* cell background */
-    --white: #FFFFFF;  /* page and card */
+    --navy: #114380;
+    --blue: #1D4ED8;
+    --sky: #60A5FA;
+    --ice: #EAF2FF;
+    --white: #FFFFFF;
+    --hover: rgb(148, 148, 248);
 }
 
 body {
@@ -11,7 +12,53 @@ body {
     min-height: 100vh;
     display: grid;
     place-items: center;
-    font-family: sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--white);
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 36px;
+    padding: 16px;
+    color: var(--navy);
+}
+
+.inputs {
+  display: inline-flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.inputs input {
+    border: 2px solid var(--sky);
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.inputs button {
+    padding: 8px 16px;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.inputs button:hover {
+  transform: translateY(-4px); 
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); 
+}
+
+.inputs button:active {
+  transform: translateY(2px); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+#result {
+    color: var(--blue);
+    font-size: 24px;
+    font-weight: bold;
 }
 
 #board {
@@ -26,4 +73,51 @@ body {
 #board button {
     font-size: 2.5rem;
     cursor: pointer;
+    background-color: var(--ice);
+    border-radius: 16px;
+    border: 2px;
+
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+}
+
+#board button:hover {
+  background-color: var(--hover);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+#board button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#scores {
+    padding-bottom: 16px;
+    color: var(--navy);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#restart {
+    padding: 16px;
+    border: 2px solid var(--blue);
+    background-color: var(--white);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#restart:hover {
+  transform: translateY(-4px); 
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); 
+}
+
+#restart:active {
+  transform: translateY(2px); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+#turn {
+    font-weight: 600;
+    color: var(--navy);
 }

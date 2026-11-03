@@ -26,8 +26,8 @@ function createPlayer(name, marker) {
 }
 
 const GameController = (function () {
-    const player1 = createPlayer("A", "X");
-    const player2 = createPlayer("B", "O");
+    const player1 = createPlayer("Player 1", "X");
+    const player2 = createPlayer("Player 2", "O");
     let activePlayer = player1;
     let gameOver = false;
 
