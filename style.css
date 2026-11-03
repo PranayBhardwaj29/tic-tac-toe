@@ -4,7 +4,8 @@
     --sky: #60A5FA;
     --ice: #EAF2FF;
     --white: #FFFFFF;
-    --hover: rgb(148, 148, 248);
+    --hover: #CFE1FF;
+    --o: #38A3F5;
 }
 
 body {
@@ -75,22 +76,38 @@ body {
     cursor: pointer;
     background-color: var(--ice);
     border-radius: 16px;
-    border: 2px;
+    border: none;
 
     transition: all 0.2s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
 }
 
-#board button:hover {
-  background-color: var(--hover);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+#board button:not(:disabled):hover {
+    background-color: var(--hover);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 #board button:active {
     transform: translateY(2px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+#board button.win {
+    position: relative;
+    z-index: 1;
+    background-color: #16A34A;
+    color: var(--white);
+    transform: translateY(-6px) scale(1.06);
+    box-shadow: 0 12px 20px rgba(22, 163, 74, 0.35);
+}
+
+#board button.dim {
+    opacity: 0.75;
+}
+
+#board button.x { color: var(--blue); }
+#board button.o { color: var(--o); }
 
 #scores {
     padding-bottom: 16px;

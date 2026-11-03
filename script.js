@@ -94,7 +94,14 @@ const GameController = (function () {
     const isGameOver = () => gameOver;
     const getPlayers = () => [player1, player2];
 
-    return { getActivePlayer, switchPlayer, playRound, checkWinner, resetGame, setPlayers, isGameOver, getPlayers };
+    const getWinningLine = () => {
+        const board = Gameboard.getBoard();
+        return winPatterns.find(([a, b, c]) =>
+            board[a] !== "" && board[a] === board[b] && board[a] === board[c]
+        ) || null;
+    };
+
+    return { getActivePlayer, switchPlayer, playRound, checkWinner, resetGame, setPlayers, isGameOver, getPlayers, getWinningLine };
 })();
 
 const displayController = (function () {
@@ -102,11 +109,17 @@ const displayController = (function () {
         const boardDiv = document.querySelector('#board');
         boardDiv.innerHTML = "";
 
+        const winLine = GameController.getWinningLine();
+
         Gameboard.getBoard().forEach((cell, index) => {
             const btn = document.createElement("button");
             btn.dataset.index = index;
             btn.textContent = cell;
             btn.disabled = GameController.isGameOver() || cell !== "";
+
+            if (cell) btn.classList.add(cell === "X" ? "x" : "o");
+            if (winLine) btn.classList.add(winLine.includes(index) ? "win" : "dim");
+
             btn.addEventListener("click", () => {
                 const message = GameController.playRound(index);
                 render();
