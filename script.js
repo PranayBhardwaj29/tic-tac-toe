@@ -67,15 +67,13 @@ const GameController = (function () {
         Gameboard.placeMarker(index, getActivePlayer().marker);
 
         if (checkWinner()) {
-            console.log(getActivePlayer().name + " wins");
             gameOver = true;
-            return;
+            return getActivePlayer().name + " wins";
         }
 
         if (Gameboard.getBoard().every(cell => cell !== "")) {
-            console.log("Tie");
             gameOver = true;
-            return;
+            return "Tie!";
         }
 
         switchPlayer();
@@ -98,7 +96,9 @@ const displayController = (function () {
             const btn = document.createElement("button");
             btn.dataset.index = index;
             btn.addEventListener("click", () => {
-                // call playRound(index), then render()
+                const message = GameController.playRound(index);
+                render();
+                document.querySelector("#result").textContent = message;
             });
             btn.textContent = cell;
             boardDiv.appendChild(btn);
@@ -109,3 +109,9 @@ const displayController = (function () {
 })();
 
 displayController.render();
+
+document.querySelector("#restart").addEventListener("click", () => {
+    GameController.resetGame();
+    displayController.render();
+    document.querySelector("#result").textContent = "";
+});
